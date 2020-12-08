@@ -21,6 +21,17 @@ public class User {
     @Column
     private String roles;
 
+    public User(Integer id, String userName, String password, boolean active, String roles) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.active = active;
+        this.roles = roles;
+    }
+
+    public User() {
+    }
+
     public Integer getId() {
         return id;
     }
