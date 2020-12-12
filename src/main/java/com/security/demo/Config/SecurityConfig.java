@@ -52,7 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
          */
         //MyUserDetailsServisinde üretilen kullanıcı bilgilerini authentication nesnesinde giriş yaparken kullanıyoruz.
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService)
+        .passwordEncoder(getPasswordEncoder());
     }
 
     //Burada encode edilmemiş şifre kullanmak için NoOpPasswordEncoder nesnesini kullanıyoruz.

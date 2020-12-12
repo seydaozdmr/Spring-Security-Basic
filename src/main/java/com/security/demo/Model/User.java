@@ -1,12 +1,17 @@
 package com.security.demo.Model;
 
 import javax.persistence.*;
+import java.util.List;
 
+//Spring JPA özelliklerini User ve Role sınıflarında kullanıyorum.
+//Entity ve Table annotations özelliklerini kullanıyorum.
+//Mysql veri tabanında bu sınıfları tablo haline getiriyorum
+//tablolara arasında Manytomany ilişkisi var bunu Hibernate otomatik olarak veritabanında oluşturuyor.
 @Entity
 @Table(name="users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column
@@ -18,19 +23,12 @@ public class User {
     @Column
     private boolean active;
 
-    @Column
-    private String roles;
+    //Rolleri liste olarak oluşturdum.
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinTable(name="user_role", joinColumns = {@JoinColumn(name="USER_ID",referencedColumnName = "ID")},
+    inverseJoinColumns = {@JoinColumn(name = "ROLE_ID",referencedColumnName = "ID")})
+    private List<Role> roles;
 
-    public User(Integer id, String userName, String password, boolean active, String roles) {
-        this.id = id;
-        this.userName = userName;
-        this.password = password;
-        this.active = active;
-        this.roles = roles;
-    }
-
-    public User() {
-    }
 
     public Integer getId() {
         return id;
@@ -64,11 +62,13 @@ public class User {
         this.active = active;
     }
 
-    public String getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(String roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
+
+
 }
