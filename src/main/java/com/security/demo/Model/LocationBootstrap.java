@@ -15,8 +15,16 @@ public class LocationBootstrap implements ApplicationListener<ContextRefreshedEv
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        try {
+            dosyaYaz();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Locations locations=new Locations();
         FileWriter locFile=null;
+        //try içinde FileWriter nesnesi oluşturursak bu nesne try içinde kalır scope olarak.
+        //Bundan dolayı nesneyi try dan önce oluşturuyoruz.
         try{
             locFile=new FileWriter("locations.txt");
             for(Location location:locations.values()){
@@ -32,6 +40,26 @@ public class LocationBootstrap implements ApplicationListener<ContextRefreshedEv
                 }
             }catch (IOException e){
                 e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    public void dosyaYaz() throws IOException{
+        Locations locations=new Locations();
+        FileWriter fileWriter=null;
+
+        try{
+            fileWriter=new FileWriter("newLocations.txt");
+            for(Location location:locations.values()){
+                fileWriter.write(location.getLocationID()+ " , "+ location.getDescription()+ "\n" );
+
+            }
+        }finally {
+            System.out.println("işlem kapatılıyor.");
+            if(fileWriter!=null){
+                fileWriter.close();
             }
         }
     }
