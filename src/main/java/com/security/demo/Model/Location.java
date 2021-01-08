@@ -31,4 +31,8 @@ public class Location {
     public Map<String, Integer> getExits() {
         return exits;
     }
+
+    public void addExit(String direc, int destination) {
+        this.exits.put(direc,destination);
+    }
 }
