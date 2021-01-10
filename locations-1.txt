@@ -1,0 +1,6 @@
+0,Bilgisarın önünde java öğreniyorsun
+1,Yolun başındasın
+2,Artık tepedesin
+3,Bir bina içerisindesin
+4,Bir nehrin yanındaki ovadasın
+5,Ormandasın

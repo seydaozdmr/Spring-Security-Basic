@@ -9,6 +9,7 @@ public class Locations implements Map<Integer,Location> {
     private static Map<Integer,Location> locations=new HashMap<Integer,Location>();
     //bootstrapping data
     static{
+
         Map<String,Integer> tempExit=new HashMap<>();
         locations.put(0,new Location(0,"Bilgisarın önünde java öğreniyorsun",null));
 
@@ -39,6 +40,7 @@ public class Locations implements Map<Integer,Location> {
         tempExit.put("S",1);
         tempExit.put("W",2);
         locations.put(5,new Location(5,"Ormandasın",tempExit));
+
     }
 
 

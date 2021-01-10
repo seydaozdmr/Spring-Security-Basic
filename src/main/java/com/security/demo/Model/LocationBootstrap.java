@@ -16,18 +16,19 @@ public class LocationBootstrap implements ApplicationListener<ContextRefreshedEv
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        try {
-            //dataOutputStreamExample();
-            dataInputStream();
-            //dosyaYaz();
-            //yonleriYaz();
-            //dosyaOku();
-            //dosyaOkuBuffered();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
+//            try {
+//
+//                objectOutputStream();
+//                //dataOutputStreamExample();
+//                //dataInputStream();
+//                //dosyaYaz();
+//                //yonleriYaz();
+//                //dosyaOku();
+//                //dosyaOkuBuffered();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            objectInputStream();
     }
 
     public void legacyWrite(){
@@ -208,5 +209,68 @@ public class LocationBootstrap implements ApplicationListener<ContextRefreshedEv
 
         }
     }
+    //serialized object write to dat file
+    public void objectOutputStream() throws IOException{
+        locationMap.clear();
+        try(Scanner locFile=new Scanner(new BufferedReader(new FileReader("locations_big.txt")));
+            Scanner direcFile=new Scanner(new BufferedReader(new FileReader("directions_big.txt")))){
+            locFile.useDelimiter(",");
+            direcFile.useDelimiter(",");
+            while(locFile.hasNextLine()){
+                String line = locFile.nextLine();
+                String[] data = line.split(",");
+                int loc = Integer.parseInt(data[0]);
+                String location = data[1];
+               // System.out.println(loc+","+location);
+                locationMap.put(loc,new Location(loc,location,null));
+                }
+            while(direcFile.hasNextLine()){
+                String line2=direcFile.nextLine();
+                String[]data2=line2.split(",");
+                int loc2=Integer.parseInt(data2[0]);
+                for(int loc:locationMap.keySet()){
+                    if(loc2==loc){
+                        String direction=data2[1];
+                        int destination=Integer.parseInt(data2[2]);
+                        //System.out.println(loc2+","+direction+","+destination);
+                        if(!direction.equalsIgnoreCase("Q")){
+                            locationMap.get(loc).addExit(direction,destination);
+                        }
+                    }
+                }
+            }
+            }
+        try(ObjectOutputStream objectOutputStream=new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("locations-object.dat")))){
+            for(Location location:locationMap.values()){
+                objectOutputStream.writeObject(location);
+            }
+        }
+
+
+    }
+
+    public void objectInputStream(){
+        try(ObjectInputStream objectInputStream=new ObjectInputStream(new BufferedInputStream(new FileInputStream("locations-object.dat")))){
+            boolean eof=false;
+            while(!eof){
+                try{
+                   Location location=(Location) objectInputStream.readObject();
+                    System.out.println("Read location : "+location.getLocationID()+","+location.getDescription());
+                    System.out.println("Found : "+location.getExits().size()+" exits.");
+                    for(String exit:location.getExits().keySet()){
+                        System.out.println(exit+","+location.getExits().get(exit));
+                    }
+                    locationMap.put(location.getLocationID(),location);
+                }catch (EOFException e){
+                    eof=true;
+                }
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }catch (ClassNotFoundException fn){
+            fn.printStackTrace();
+        }
+    }
+
 
 }
