@@ -10,6 +10,14 @@ import java.util.Map;
 import java.util.Scanner;
 
 //Writing file example
+//Dealing with bytes we use byte streams so FileInputStream-FileOutputStream
+//if we deal with characters we use character streams  so FileReader (to read a file) - FileWriter (to write data to file)
+//if we want to read and write data throw memory we use buffered streams
+//for bytes data BufferedInputStream - BufferredOutputStream
+//for character data BufferedReader - BufferedWriter
+//Scanner useful for breaking down dormatted input into tokens and translating individual tokens according to their data type. Java tutorial
+
+
 @Component
 public class LocationBootstrap implements ApplicationListener<ContextRefreshedEvent> {
     private Map<Integer,Location> locationMap=new HashMap<>();
@@ -37,6 +45,7 @@ public class LocationBootstrap implements ApplicationListener<ContextRefreshedEv
         //try içinde FileWriter nesnesi oluşturursak bu nesne try içinde kalır scope olarak.
         //Bundan dolayı nesneyi try dan önce oluşturuyoruz.
         try{
+            //FileWrite character streams yapmamıza olanak sağlar
             locFile=new FileWriter("locations.txt");
             for(Location location:locations.values()){
                 locFile.write(location.getLocationID()+","+location.getDescription()+"\n");
@@ -87,7 +96,8 @@ public class LocationBootstrap implements ApplicationListener<ContextRefreshedEv
     }
 
     public void dosyaOku() throws IOException{
-
+        //dosyadan veri okumak için Scanner kullanıyoruz. Bu klasik character okuma işlemi için FileReader kullanıyoruz.
+        //Scanner belirli bir biçimdeki datayı dosyadan belirli bir kurala göre mesela virgüllere ayırarak çekmeyi sağlıyor.
         try (Scanner scanner=new Scanner(new FileReader("locations_big.txt"))) {
             System.out.println("dosya okunuyor....");
             scanner.useDelimiter(",");

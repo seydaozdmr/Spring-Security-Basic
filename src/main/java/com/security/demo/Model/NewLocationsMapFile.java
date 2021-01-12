@@ -4,7 +4,6 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.*;
 import java.util.Collection;
 import java.util.HashMap;
@@ -20,61 +19,140 @@ public class NewLocationsMapFile implements Map<Integer,Location> , ApplicationL
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent)  {
+        //locations-object.dat dosyasını ObjectInputStream ile açıyoruz ve içindeki nesneleri okuyup static locationMap Map nesnesine yazıyoruz.
+        try(ObjectInputStream inputStream=new ObjectInputStream(new BufferedInputStream(new FileInputStream("locations-object.dat")))){
+            boolean eof=false;
+            while(!eof){
+                try{
+                    Location location=(Location) inputStream.readObject();
+                    //System.out.println("Read location : "+ location.getLocationID()+","+location.getDescription());
+                    for(String exits:location.getExits().keySet()){
+                        //System.out.println("Exits: "+exits+","+location.getExits().get(exits));
+                    }
+                    locationsMap.put(location.getLocationID(),location);
+                }catch (EOFException e){
+                    System.out.println("Eof excepiton "+e.getMessage());
+                    eof=true;
+                }
+            }
+        }catch (IOException e){
+            System.out.println("dosya okunamadı.. "+e.getMessage());
+        }catch (ClassNotFoundException e){
+            System.out.println("sınıf bulunamadı.. "+e.getMessage());
+        }
+
+        //locationMap dosyasındaki nesneleri ve bilgileri locations_rand.dat dosyasına RandomAccessFile kullanarak yazıyoruz.
         try(RandomAccessFile raf=new RandomAccessFile("locations_rand.dat","rwd")){
+            //ilk başta randomaccessfile 0 noktasında bulunuyor.
+            System.out.println("ilk başta : "+raf.getFilePointer());
             raf.writeInt(locationsMap.size());
-            int indexSize= locationsMap.size()*3*Integer.BYTES;
-            int locationStart=(int) (indexSize+raf.getFilePointer()+Integer.BYTES);
+            //locationMap.size yazdıktan sonra 4 bytelık alan yazmıyş oluyor.
+            System.out.println("locationMap.size() yazıldıktan sonra : "+raf.getFilePointer());
+            System.out.println(locationsMap.size());
+            int indexSize=locationsMap.size()*3* Integer.BYTES;
+            System.out.println(indexSize);
+            int locationStart=(int) (indexSize+ raf.getFilePointer()+ Integer.BYTES);
+            System.out.println("locationStart: "+locationStart);
             raf.writeInt(locationStart);
             long indexStart=raf.getFilePointer();
+            System.out.println("indexStart: "+indexStart);
             int startPointer=locationStart;
             raf.seek(startPointer);
+            System.out.println("şuan bulunduğumuz nokta: "+raf.getFilePointer());
             for(Location location:locationsMap.values()){
+                //1688 byte ileri gittikten sonra bu noktada dosyaya yazmaya başlıyoruz:
                 raf.writeInt(location.getLocationID());
                 raf.writeUTF(location.getDescription());
                 StringBuilder stringBuilder=new StringBuilder();
                 for(String direction:location.getExits().keySet()){
-                    stringBuilder.append(direction);
-                    stringBuilder.append(",");
-                    stringBuilder.append(location.getExits().get(direction));
-                    stringBuilder.append(",");
+                    if(!direction.equalsIgnoreCase("Q")){
+                        //çıkışları dosyaya yazdırıyoruz ...
+                        stringBuilder.append(direction);
+                        stringBuilder.append(",");
+                        stringBuilder.append(location.getExits().get(direction));
+                        stringBuilder.append(",");
+                        //System.out.println(direction+","+location.getExits().get(direction));
+                    }
                 }
                 raf.writeUTF(stringBuilder.toString());
-                IndexRecord record=new IndexRecord(startPointer,(int)(raf.getFilePointer()-startPointer));
+                //Bulunduğumuz noktayı ve bilginin uzunluğunu IndexRecord'da tutuyoruz.
+                IndexRecord record=new IndexRecord(startPointer,(int) (raf.getFilePointer()-startPointer));
+                //yukarıdaki index map'ine bu bilgileri yazıyoruz. yani hangi location hangi noktadan başlıyor ve hangi uzunlukta.
                 index.put(location.getLocationID(),record);
-                startPointer=(int) raf.getFilePointer();
+                //en son startPointer'i kaldığımız yerede bırakıyoruz.
+                //System.out.println("ilk location'u yazdıktan sonra bulunduğum nokta: "+raf.getFilePointer());
+                startPointer=(int)raf.getFilePointer();
             }
-
-        }catch (IOException e){
+            //satırı yazdıktan sonra satır bilgilerini yani nerede başlayıp nerede bittiğini ve uzunluk bilgilerini satırın başına
+            //IndexRecord'u kullanarak yazıyoruz.::
+            System.out.println("indexStart: "+indexStart);
+            raf.seek(indexStart);
+            System.out.println("son nokta: "+raf.getFilePointer());
+            for(Integer locationID:index.keySet()){
+                raf.writeInt(locationID);
+                raf.writeInt(index.get(locationID).getStartByte());
+                raf.writeInt(index.get(locationID).getLenght());
+            }
+            System.out.println("bütün işlemler bittikten sonra bulnan nokta: "+raf.getFilePointer());
+        }catch(IOException e){
             e.printStackTrace();
         }
 
+
         try {
-            getLocation(1);
+            //dosyayı açıyorum ve getLocation'ile istediğim bir location'in değerlerini yazdırabiliyorum.
+            ra=new RandomAccessFile("locations_rand.dat","rwd");
+            System.out.println(index.size());
+            for(int i=1;i<=index.size();i++){
+                getLocation(i);
+            }
+//            getLocation(20);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+//        try {
+//            Location currentLocation=getLocation(12);
+//            System.out.println(currentLocation.getLocationID()+","+currentLocation.getDescription());
+//            for(String i:currentLocation.getExits().keySet()){
+//                System.out.println(i+","+currentLocation.getExits().get(i));
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
     }
 
     static{
-        try{
-            ra=new RandomAccessFile("locations_rand.dat","rwd");
-            int numLocations=ra.readInt();
-            long locationStartPoint=ra.readInt();
+//        try{
+//            ra=new RandomAccessFile("locations_rand.dat","rwd");
+//            int numLocations=ra.readInt();
+//            System.out.println("kaç tane eleman olduğu: "+numLocations);
+//            long locationStartPoint=ra.readInt();
+//            System.out.println("okumaya başlanması gereken değer: "+locationStartPoint);
+//            System.out.println("şu an okunan sıra: "+ra.getFilePointer());
+//            while(ra.getFilePointer()<locationStartPoint){
+//                int locationId=ra.readInt();
+//                System.out.println("id'yi okuduktan sonra bulunduğu nokta : "+ra.getFilePointer());
+//                int locationStart=ra.readInt();
+//                System.out.println("location'un başladığı yeri okuduktan sonra sonra nokta : "+ra.getFilePointer());
+//                int locationLenght=ra.readInt();
+//                System.out.println("location'un uzunluğunu okuduktan sonra: "+ra.getFilePointer());
+//
+//                IndexRecord record=new IndexRecord(locationStart,locationLenght);
+//                System.out.println(locationStart+","+locationLenght);
+//                index.put(locationId,record);
+//
+//            }
+//
+//        }catch (IOException e){
+//            System.out.println("IOException in static initializer");
+//        }
 
-            while(ra.getFilePointer()<locationStartPoint){
-                int locationId=ra.readInt();
-                int locationStart=ra.readInt();
-                int locationLenght=ra.readInt();
-                IndexRecord record=new IndexRecord(locationStart,locationLenght);
-                index.put(locationId,record);
-            }
 
-        }catch (IOException e){
-            System.out.println("IOException in static initializer");
-        }
-
-
-
+      //ObjectInputStream example: locations-object.dat dosyasını okuyan ve locationsMap Map'ine bilgileri getiren try bloğu
 //        try(ObjectInputStream locFile=new ObjectInputStream(new BufferedInputStream(new FileInputStream("locations-object.dat")))){
 //            boolean eof=false;
 //            while(!eof){
@@ -98,17 +176,25 @@ public class NewLocationsMapFile implements Map<Integer,Location> , ApplicationL
 //            System.out.println("sınıf bulunamadı : "+e.getMessage());
 //        }
     }
+
+
     //adım adım location'ı buluyor
     public Location getLocation(int locationID) throws IOException{
+        //IndexRecord nesnesi olarak kaydettiğimiz konumu Locations id vererek buluyoruz.
         IndexRecord record=index.get(locationID);
+        //Bu noktanın nereden başladığını buluyoruz. ve o noktaya gidiyoruz.
         ra.seek(record.getStartByte());
+        //Burada ilk okuduğumuz location'un id'si
         int id=ra.readInt();
         String descrip=ra.readUTF();
         String exits=ra.readUTF();
         String [] exitsPart=exits.split(",");
-
+        System.out.println("location id:"+id+" , "+"description: "+descrip);
         Location location=new Location(locationID,descrip,null);
-        if(locationID!=0){
+        //System.out.println(exitsPart.length);
+
+        if(locationID!=0 && exitsPart.length>1){
+
             for(int i=0;i<exitsPart.length;i++){
                 System.out.println("exitPart= "+exitsPart[i]);
                 System.out.println("exitPart[+1]= "+exitsPart[i+1]);
