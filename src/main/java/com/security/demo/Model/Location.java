@@ -38,4 +38,6 @@ public class Location implements Serializable {
     public void addExit(String direc, int destination) {
         this.exits.put(direc,destination);
     }
+
+
 }
