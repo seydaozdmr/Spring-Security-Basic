@@ -173,7 +173,7 @@ public class LocationBootstrap implements ApplicationListener<ContextRefreshedEv
             e.printStackTrace();
         }
     }
-
+    //binary file write
     public void dataOutputStreamExample() throws IOException{
         Locations locations=new Locations();
         try(DataOutputStream locFile=new DataOutputStream(new BufferedOutputStream(new FileOutputStream("locations-2.dat")))){
