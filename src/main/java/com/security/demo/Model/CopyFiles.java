@@ -27,11 +27,53 @@ public class CopyFiles extends SimpleFileVisitor<Path> implements ApplicationLis
 
 //        Path sourcePath=FileSystems.getDefault().getPath("files"+File.separator+"Dir1"+File.separator+"Dir2"+File.separator+"fileX.txt");
 //        System.out.println("source path: "+sourcePath.toAbsolutePath());
+
+        //Java io.file to convert java.nio.path
+        File file=new File("files\\file3.txt");
+        Path convertedPath=file.toPath();
+        System.out.println("converted path: "+convertedPath.toAbsolutePath());
         try{
             Files.walkFileTree(this.sourceRoot,this);
         }catch (IOException e){
             e.printStackTrace();
         }
+
+        //Resolving paths
+        File file1=new File("C:\\Examples");
+        File resolvedFile=new File(file1,"dir\\file1.txt");
+        System.out.println("resolved path: "+resolvedFile.toPath());
+
+        resolvedFile= new File("C:\\Examples","dir\\file1.txt");
+        System.out.println("resolved path2 : "+resolvedFile.toPath());
+
+        Path parentPath=Paths.get("C:\\Examples");
+        Path childrenPath=Paths.get("dir\\file1.txt");
+        System.out.println("merging parent and children paths: "+parentPath.resolve(childrenPath));
+
+        //working directory:
+        File workingDirectory=new File("").getAbsoluteFile();
+        System.out.println("working directory: "+workingDirectory.getAbsoluteFile());
+
+        System.out.println("-----print dir3 contents using list()-----");
+        File dir3Files=new File(workingDirectory,"\\files\\Dir3");
+        String [] dir3Contents=dir3Files.list();
+        for(String content:dir3Contents){
+            System.out.println(content);
+        }
+
+        System.out.println("-----print dir3 contents using listFiles()------");
+        File [] dir3FilesContents=dir3Files.listFiles();
+        for(int i=0;i<dir3Contents.length;i++){
+            System.out.println(i+ " : "+dir3FilesContents[i].getName());
+            if(dir3FilesContents[i].isDirectory()){
+                File [] tempDir=dir3FilesContents[i].listFiles();
+                for(int j=0;j< tempDir.length;j++){
+                    System.out.println(j+" : "+tempDir[j].getName());
+                }
+            }
+        }
+
+        //recursive yap....
     }
 
     @Override
