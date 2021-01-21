@@ -16,12 +16,12 @@ public class PrintNames extends SimpleFileVisitor<Path> implements ApplicationLi
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        System.out.println("------Walking Tree for files---------");
-        try{
-            Files.walkFileTree(file,this);
-        }catch (IOException e){
-            System.out.println(e.getMessage());
-        }
+//        System.out.println("------Walking Tree for files---------");
+//        try{
+//            Files.walkFileTree(file,this);
+//        }catch (IOException e){
+//            System.out.println(e.getMessage());
+//        }
 
     }
 
