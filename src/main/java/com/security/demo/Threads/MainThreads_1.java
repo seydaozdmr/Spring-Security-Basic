@@ -11,6 +11,10 @@ import static com.security.demo.Threads.ThreadColor.*;
 public class MainThreads_1 implements ApplicationListener<ContextRefreshedEvent> {
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        System.out.println("Reading array for 4 second delay:");
+        Thread newThread=new Sleep_5();
+        newThread.start();
+
         System.out.println(ANSI_PURPLE+ "hello world");
         Thread anotherThread=new AnotherThread_2();
         anotherThread.setName("***ANOTHER THREAD***");
