@@ -18,10 +18,59 @@ public class CountDown_4 implements ApplicationListener<ContextRefreshedEvent>{
         CountdownThread t2=new CountdownThread(countDown);
         t2.setName("Thread 2");
 
+        //Thread interference
+        Counter counter=new Counter();
+        CounterThread th1=new CounterThread(counter);
+        th1.start();
+        Arttir th2=new Arttir(counter);
+        th2.start();
+
+
+
         //Thread'i extend edttiği için start ile çalıştırıyoruz.
         t1.start();
         t2.start();
     }
+
+    class Counter {
+        private int c=0;
+        public void increment(){
+            c++;
+        }
+        private void decrement(){
+            c--;
+        }
+        public int value(){
+            return c;
+        }
+    }
+
+    class CounterThread extends Thread{
+        private Counter counter;
+
+        public CounterThread (Counter counter){
+            this.counter=counter;
+        }
+        public void run(){
+            for(int i=0;i<10;i++){
+                counter.decrement();
+                System.out.println(counter.value());
+            }
+        }
+    }
+    class Arttir extends Thread{
+        private Counter counter;
+        public Arttir(Counter counter){
+            this.counter=counter;
+        }
+        public void run(){
+            for(int i=0;i<10;i++){
+                counter.increment();
+                System.out.println(counter.value());
+            }
+        }
+    }
+
 
     class CountDown{
         //Daha önce local variable kullanıştık for loop içinde
