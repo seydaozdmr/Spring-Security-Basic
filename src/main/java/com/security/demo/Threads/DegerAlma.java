@@ -12,7 +12,16 @@ public class DegerAlma {
 
         degerOku.start();
 //        karakok.start();
-        f.start();
+        //f.start();
+        //değer oku thread'i bitmeden toplamı ekrana yazdırmıyoruz bunun için thred'i join ile bekletiyoruz.
+        try{
+            degerOku.join();
+        }catch (InterruptedException e){
+            System.out.println(e.getMessage());
+        }
+        System.out.println("toplam:"+d.getI());
+
+
 
     }
 }

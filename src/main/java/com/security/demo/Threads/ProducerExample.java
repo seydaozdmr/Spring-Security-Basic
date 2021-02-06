@@ -32,7 +32,6 @@ class MyProducer implements Runnable{
         this.buffer = buffer;
         this.color = color;
     }
-
     @Override
     public void run() {
         Random random=new Random();
