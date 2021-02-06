@@ -41,6 +41,7 @@ public class MainThreads_1 implements ApplicationListener<ContextRefreshedEvent>
 //                System.out.println(ANSI_RED +"Hello from the anonymous Class's implementation");
 //                try {
 //                    //myRunnable threadi içerisinde anotherThread Thread'ini çağırdık ve çalıştırdık.
+//                    //Burada önceliği anotherThread'e veriyoruz ve onun bitmesini bekliyoruz
 //                    anotherThread.join();
 //
 //                }catch (InterruptedException e){

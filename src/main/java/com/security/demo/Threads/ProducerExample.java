@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import static com.security.demo.Threads.ProducerExample.EOF;
-
+//Üretici tüketici problemi örneği:
 public class ProducerExample {
     public static final String EOF="EOF";
     public static void main(String[] args) {
