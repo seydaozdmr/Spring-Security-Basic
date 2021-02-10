@@ -1,5 +1,6 @@
 package com.security.demo.Threads;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -15,23 +16,56 @@ public class BankAccount {
     }
 
     public void deposit(double amount){
-        lock.lock();
+        //Reentrantlock example which lock the precess
+//        lock.lock();
+//        try{
+//            this.balance +=amount;
+//        }finally {
+//            lock.unlock();
+//        }
+        //try
         try{
-            this.balance +=amount;
-        }finally {
-            lock.unlock();
+            if(lock.tryLock(1000, TimeUnit.MILLISECONDS)){
+                try{
+                    balance+=amount;
+                }finally {
+                    lock.unlock();
+                }
+            }else{
+                System.out.println("Couldn't get the lock");
+            }
+        }catch (InterruptedException e){
+            System.out.println(e.getMessage());
         }
+
 
     }
 
     public void withdraw(double amount){
-        lock.lock();
+        //reentrant lock
+//        lock.lock();
+//        try{
+//            this.balance-=amount;
+//        }finally {
+//            lock.unlock();
+//        }
+        //this status is local variable so allocated in stack, shortly thread - safe.
+        boolean status=false;
         try{
-            this.balance-=amount;
-        }finally {
-            lock.unlock();
+            if(lock.tryLock(1000,TimeUnit.MILLISECONDS)){
+                try{
+                    balance-=amount;
+                    status=true;
+                }finally {
+                    lock.unlock();
+                }
+            }else{
+                System.out.println("Couldn't get the lock.");
+            }
+        }catch (InterruptedException e){
+            System.out.println(e.getMessage());
         }
-
+        System.out.println("Transaction status : "+status);
     }
 
     public double getBalance(){

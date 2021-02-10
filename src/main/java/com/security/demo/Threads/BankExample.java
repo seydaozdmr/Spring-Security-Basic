@@ -32,6 +32,12 @@ class Ali extends Thread{
             e.printStackTrace();
         }
         bankAccount.withdraw(50);
+        try{
+            System.out.println("Ali para çekti güncel hesap:"+bankAccount.getBalance());
+            sleep(300);
+        }catch (InterruptedException e){
+            System.out.println(e.getMessage());
+        }
 
     }
 }
@@ -52,6 +58,12 @@ class Ayse extends Thread{
             e.printStackTrace();
         }
         bankAccount.withdraw(100);
+        try{
+            System.out.println("Ayşe para çekti güncel hesap:"+bankAccount.getBalance());
+            sleep(250);
+        }catch (InterruptedException e){
+            System.out.println(e.getMessage());
+        }
 
 
     }
