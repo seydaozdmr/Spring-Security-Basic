@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class Example_11 {
     public static void main(String[] args) {
@@ -50,8 +51,59 @@ public class Example_11 {
 
         //Approach 7 The lambda expression used to print members is highlighted:
         System.out.println("approach 7:***");
+        //processPerson metodunu uygularken abstract olarak verilen parametreleri ve uygulamaları somut olarak
+        //burada uyguluyoruz.
         processPersons(calisanListesi,p-> p.getCinsiyet()==Person.Cinsiyet.KADIN && p.getAge()<30,p->p.printPerson());
 
+
+        //Approach 7-1 abstract function implementation
+
+        System.out.println("abstract function implementation");
+        //kullanıcıları belirli bir kritere uyan personelin email adreslerini ekrana yazdıran program.
+        processPersonsWithFunction(calisanListesi,person -> person.getCinsiyet()== Person.Cinsiyet.ERKEK &&
+                                   person.getAge()<35, person -> person.getEmailAdress(),
+                                   email -> System.out.println(email));
+        //Bu fonksiyonda email adresini emailList listesine ekliyoruz.
+        List<String> emailList=new ArrayList<>();
+        processPersonsWithFunction(calisanListesi,person -> person.getCinsiyet()== Person.Cinsiyet.ERKEK &&
+                        person.getAge()<35, person -> person.getEmailAdress(),
+                email -> emailList.add(email));
+
+        emailList.stream().forEach(p-> System.out.println("adress: "+p));
+
+        //Approach - 8
+        System.out.println("30 yaşından büyük kadın personel");
+        //Note : Note: You can omit the data type of the parameters in a lambda expression.
+        // In addition, you can omit the parentheses if there is only one parameter.
+        // For example, the following lambda expression is also valid:
+        System.out.println("Email adres: ");
+        processElements(calisanListesi,(Person p)->p.getCinsiyet()== Person.Cinsiyet.KADIN,(Person p)->p.getEmailAdress(),email -> System.out.println(email));
+        System.out.println("İsimler");
+        processElements(calisanListesi,p-> p.getCinsiyet()== Person.Cinsiyet.KADIN && p.getAge()>30, p-> p.getName(),isim -> System.out.println(isim));
+
+
+        //Approach 9: Use Aggregate Operations That Accept Lambda Expressions as Parameters
+        //Yukarıda gerçekleştirdiğimiz bütün örnekleri method kullanmadan lambda kullanarak gerçekleştiriyoruz.
+        System.out.println("LAMBDA EXPRESSIN : ****");
+        calisanListesi.stream() //sourceFile -> List<Person> personList
+                .filter(p-> p.getCinsiyet()== Person.Cinsiyet.ERKEK && p.getAge()>25) //Predicate
+                .map(p->p.getEmailAdress()) //Function mapping
+                .forEach(email -> System.out.println(email)); //Consumer
+
+        //NOT NOT NOT
+        //Aggregate operations process elements from a stream, not directly from a collection
+        // (which is the reason why the first method invoked in this example is stream).
+        // A pipeline is a sequence of stream operations, which in this example is filter- map-forEach.
+        //In addition, aggregate operations typically accept lambda expressions as parameters, enabling you to customize how they behave.
+
+
+        //NOT
+        /*
+        * A return statement is not an expression; in a lambda expression,
+        * you must enclose statements in braces ({}). However,
+        * you do not have to enclose a void method invocation in braces.
+        * For example, the following is a valid lambda expression:
+         */
     }
 
     //Approach 1: Create Methods That Search for Members That Match One Characteristic
@@ -96,6 +148,31 @@ public class Example_11 {
         for(Person p:personList){
             if(personPredicate.test(p)){
                 personConsumer.accept(p);
+            }
+        }
+    }
+
+    //Approach 7 : In this case, you need a functional interface that contains an abstract method that returns a value.
+    public static void processPersonsWithFunction(List<Person> personList, Predicate<Person> tester, Function<Person,String> mapper,Consumer<String> block){
+        for(Person p:personList){
+            if(tester.test(p)){
+                //eğer test şartına uyan elemanlar varsa onlara ait property'ini mapper ile uyguluyoruz.
+                String data=mapper.apply(p);
+                //block.accept ile bulunan data String'ini lambda ile istediğimiz işlemi gerçekleştirebiliyoruz.
+                block.accept(data);
+            }
+        }
+    }
+
+    //Approach 8: Use Generics More Extensively
+    //X cinsinden
+    public static <X,Y> void processElements(List<X> elemanList,Predicate<X> tester,Function<X,Y> mapper,Consumer<Y> block){
+        for(X x:elemanList){
+            if(tester.test(x)){
+                Y data=mapper.apply(x);
+                //burası yapılması istenen işlemi uyguluyor bu ekrana yazdırma olabilir ya da başka bir listeye
+                //ekleme gibi bunu methodu implemente ederken lambda ile belirliyoruz.
+                block.accept(data);
             }
         }
     }
