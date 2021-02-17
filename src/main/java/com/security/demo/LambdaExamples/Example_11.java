@@ -234,6 +234,14 @@ class Person{
     public void printPerson(){
         System.out.println("Name: "+name+" Age: "+getAge()+" Cinsiyeti: "+cinsiyet.toString()+" Email: "+emailAdress);
     }
+
+    public static int compareByAge(Person a,Person b){
+        return a.getBirthday().compareTo(b.getBirthday());
+    }
+
+    public static int compareByName(Person a,Person b){
+        return a.getName().compareTo(b.getName());
+    }
 }
 
 
