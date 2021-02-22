@@ -242,6 +242,13 @@ class Person{
     public static int compareByName(Person a,Person b){
         return a.getName().compareTo(b.getName());
     }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
 
 
