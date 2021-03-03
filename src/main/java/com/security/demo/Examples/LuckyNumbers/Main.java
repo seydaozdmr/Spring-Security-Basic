@@ -9,5 +9,6 @@ public class Main {
         numbers.generateKeyTimes();
         numbers.luckTen();
         numbers.sortNumbers();
+        Integer a=new Integer(19);
     }
 }
