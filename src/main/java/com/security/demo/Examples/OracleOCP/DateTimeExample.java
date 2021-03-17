@@ -59,5 +59,23 @@ public class DateTimeExample {
         System.out.println(timeTxt);
         System.out.println("Istanbul : "+dateTimeFormatter.format(istanbulTime));
 
+        Computer computer = new Laptop();
+        Laptop laptop = new Laptop();
+        computer.startup();
+        laptop.startup();
+    }
+
+
+}
+class Laptop extends Computer {
+    public void startup() {
+        System.out.print("laptop-");
+    }
+}
+
+class Computer {
+
+    public void startup() {
+        System.out.print("computer-");
     }
 }
