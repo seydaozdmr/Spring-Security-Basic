@@ -9,7 +9,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class MessageBundleExample {
-    public static void main(String[] args) {
+    public final static void main(String[] args) {
         Locale locale=new Locale("tr","TR");
         ResourceBundle bundle=ResourceBundle.getBundle("messages",locale);
 
