@@ -34,8 +34,16 @@ public class Shop {
 
         Product p4=new Product();
         System.out.println("indirimli fiyat 2 :"+p4.getDiscount());
-        
+
+        //we can access only Object's methods on heap none of Product's
+        Object o1=new Product();
+        System.out.println(o1.toString());
+
+
+
 
 
     }
+
+
 }
