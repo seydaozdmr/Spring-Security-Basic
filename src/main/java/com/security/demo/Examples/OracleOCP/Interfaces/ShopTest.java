@@ -3,6 +3,7 @@ package com.security.demo.Examples.OracleOCP.Interfaces;
 import com.security.demo.Examples.OracleOCP.Exercise_1.Begeni;
 import com.security.demo.Examples.OracleOCP.Product;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -11,7 +12,7 @@ import java.util.stream.Stream;
 
 public class ShopTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedEncodingException {
         Drink drink=new Drink(5);
 
         drink.measure();
@@ -35,15 +36,28 @@ public class ShopTest {
 
         ProductManager productManager=new ProductManager();
 //        Review review=new Review();
-        productManager.createProduct(101,"tea",BigDecimal.valueOf(21.23),Begeni.FOUR_STAR);
-        productManager.reviewProduct((Drink)drink,Begeni.FIVE_STAR,"Güzel bir ürün");
+        //productManager.createProduct(101,"tea",BigDecimal.valueOf(21.23),Begeni.FOUR_STAR);
+        //productManager.reviewProduct((Drink)drink,Begeni.FIVE_STAR,"Güzel bir ürün");
 
 
-        productManager.printProduct();
+        //AbstractProduct food= productManager.createProduct(102,"Kek",BigDecimal.valueOf(23.11),Begeni.FIVE_STAR, LocalDate.now());
+        productManager.createProduct(102,"Kek",BigDecimal.valueOf(23.11),Begeni.FIVE_STAR, LocalDate.now());
 
-        AbstractProduct food= productManager.createProduct(102,"Kek",BigDecimal.valueOf(23.11),Begeni.FIVE_STAR, LocalDate.of(2021,05,05));
-        productManager.reviewProduct(food,Begeni.FOUR_STAR,"güzel");
-        productManager.printProduct();
+        productManager.reviewProduct(102,Begeni.FOUR_STAR,"güzel");
+        productManager.reviewProduct(102,Begeni.ONE_STAR,"çok kötü");
+        productManager.reviewProduct(102,Begeni.ONE_STAR,"idare");
+        //System.out.println("son tüketim tarihi: "+food.getBestBefore());
+
+        productManager.createProduct(103,"Yemek",BigDecimal.valueOf(12.32),Begeni.FOUR_STAR,LocalDate.now().plusDays(4));
+        productManager.reviewProduct(103,Begeni.ONE_STAR,"kötü");
+        productManager.reviewProduct(103,Begeni.THREE_STAR,"idare");
+
+        System.out.println("-------------ÜRÜNLER--------------");
+        productManager.printProduct(102);
+        System.out.println("------------------------");
+        productManager.printProduct(103);
+        System.out.println("*****************");
+        //productManager.printProduct(102);
 
 
 //        AbstractProduct[] products={new AbstractProduct(101,"çay", BigDecimal.valueOf(10.10), Begeni.FOUR_STAR),

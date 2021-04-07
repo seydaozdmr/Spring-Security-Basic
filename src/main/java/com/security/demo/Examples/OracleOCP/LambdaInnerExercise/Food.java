@@ -1,11 +1,11 @@
-package com.security.demo.Examples.OracleOCP.Interfaces;
+package com.security.demo.Examples.OracleOCP.LambdaInnerExercise;
 
 import com.security.demo.Examples.OracleOCP.Exercise_1.Begeni;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Food extends AbstractProduct {
+public class Food extends Product  {
 
     private LocalDate bestBefore;
 
@@ -29,4 +29,6 @@ public class Food extends AbstractProduct {
     public Food applyRating(Begeni rating) {
         return new Food(getId(),getName(),getPrice(),rating,this.getBestBefore());
     }
+
+
 }

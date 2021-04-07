@@ -1,10 +1,14 @@
-package com.security.demo.Examples.OracleOCP.Interfaces;
+package com.security.demo.Examples.OracleOCP.LambdaInnerExercise;
 
 import com.security.demo.Examples.OracleOCP.Exercise_1.Begeni;
 
+import com.security.demo.Examples.OracleOCP.Interfaces.Drinkable;
+import com.security.demo.Examples.OracleOCP.Interfaces.Liquid;
+import com.security.demo.Examples.OracleOCP.Interfaces.Testable;
+
 import java.math.BigDecimal;
 
-public class Drink extends AbstractProduct implements Liquid,Testable,Drinkable {
+public class Drink extends Product implements Liquid, Testable, Drinkable {
 
     private int quantityOfDrinkableLiquid;
 
@@ -59,5 +63,10 @@ public class Drink extends AbstractProduct implements Liquid,Testable,Drinkable 
     @Override
     public Drink applyRating(Begeni rating) {
         return new Drink(getId(),getName(),getPrice(),rating,this.quantityOfDrinkableLiquid);
+    }
+
+    @Override
+    public int compareTo(Product o) {
+        return 0;
     }
 }

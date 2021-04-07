@@ -1,6 +1,7 @@
-package com.security.demo.Examples.OracleOCP.Interfaces;
+package com.security.demo.Examples.OracleOCP.LambdaInnerExercise;
 
 import com.security.demo.Examples.OracleOCP.Exercise_1.Begeni;
+import com.security.demo.Examples.OracleOCP.Interfaces.Rateable;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -10,7 +11,7 @@ import java.util.Objects;
 //abstract sınıf bir interface'i implemente ettiğinde o interface'in metotlarını implemente etmek zorunda değildir
 //çünkü sınıfın kendisi abstract. fakat bu sınıfı başka bir sınıf extend ederse interface'e ait olan metotları da
 //somutlaştırmak zorunda.
-public abstract class AbstractProduct implements Comparable<AbstractProduct>,Rateable<AbstractProduct>{
+public abstract class Product implements Comparable<Product>, Rateable<Product> {
 
     public static final BigDecimal DISCOUNT_RATE=BigDecimal.valueOf(0.1);
     private int id;
@@ -18,18 +19,18 @@ public abstract class AbstractProduct implements Comparable<AbstractProduct>,Rat
     private BigDecimal price;
     private Begeni rating;
 
-    AbstractProduct(){
+    Product(){
         this(0,"no name",BigDecimal.ZERO);
     }
 
-    AbstractProduct(int id, String name, BigDecimal price, Begeni begeni){
+    Product(int id, String name, BigDecimal price, Begeni begeni){
         this.id=id;
         this.name=name;
         this.price=price;
         this.rating=begeni;
     }
 
-    AbstractProduct(int id, String name, BigDecimal price){
+    Product(int id, String name, BigDecimal price){
         this(id,name,price,Begeni.NOT_EVALUATE);
     }
 
@@ -55,8 +56,8 @@ public abstract class AbstractProduct implements Comparable<AbstractProduct>,Rat
     public boolean equals(Object o) {
         if (this == o) return true;
         //if (o == null || getClass() != o.getClass()) return false;
-        if(o instanceof AbstractProduct){
-            AbstractProduct that = (AbstractProduct) o;
+        if(o instanceof Product){
+            Product that = (Product) o;
             return id == that.id; //&& name.equals(that.name);
         }
         return false;
@@ -92,7 +93,7 @@ public abstract class AbstractProduct implements Comparable<AbstractProduct>,Rat
     }
 
     @Override
-    public int compareTo(AbstractProduct o) {
+    public int compareTo(Product o) {
         if(this.rating.ordinal()<o.getRating().ordinal()){
             return 1;
         }else if(this.rating.ordinal()>o.getRating().ordinal()){
