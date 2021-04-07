@@ -7,6 +7,10 @@ import java.time.LocalDate;
 public class Food extends AbstractProduct{
     private LocalDate bestBefore;
 
+    public Food(){
+
+    }
+
     Food(LocalDate bestBefore) {
         super();//no args constructor of Product abstract class
         this.bestBefore = bestBefore;
@@ -33,6 +37,7 @@ public class Food extends AbstractProduct{
     public String toString() {
         return super.toString();
     }
+
 
     public LocalDate getBestBefore() {
         return bestBefore;

@@ -18,6 +18,8 @@ public abstract class Product implements Comparable<Product>, Rateable<Product> 
     private String name;
     private BigDecimal price;
     private Begeni rating;
+    private LocalDate bestBefore;
+    private BigDecimal discount;
 
     Product(){
         this(0,"no name",BigDecimal.ZERO);
@@ -28,6 +30,18 @@ public abstract class Product implements Comparable<Product>, Rateable<Product> 
         this.name=name;
         this.price=price;
         this.rating=begeni;
+    }
+
+    public void setBestBefore(LocalDate bestBefore) {
+        this.bestBefore = bestBefore;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public void setDiscount(BigDecimal discount){
+        this.discount=this.price.multiply(discount);
     }
 
     Product(int id, String name, BigDecimal price){
@@ -83,12 +97,13 @@ public abstract class Product implements Comparable<Product>, Rateable<Product> 
 
     @Override
     public String toString() {
-        return "AbstractProduct{" +
+        return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
-                ", rating=" + rating.printBegeni() +
-                ", best Before =" +getBestBefore()+
+                ", rating=" + rating +
+                ", bestBefore=" + bestBefore +
+                ", discount =" + discount +
                 '}';
     }
 

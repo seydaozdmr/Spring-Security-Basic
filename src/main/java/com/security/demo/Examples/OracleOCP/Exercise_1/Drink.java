@@ -5,8 +5,11 @@ import java.math.RoundingMode;
 import java.time.LocalTime;
 
 public class Drink extends AbstractProduct{
+    public Drink(){
 
-    Drink(int id, String name, BigDecimal price, Begeni begeni) {
+    }
+
+    public Drink(int id, String name, BigDecimal price, Begeni begeni) {
         super(id, name, price, begeni);
     }
 
@@ -20,4 +23,6 @@ public class Drink extends AbstractProduct{
         LocalTime time=LocalTime.now();
         return ((time.isAfter(LocalTime.of(17,30)) && time.isBefore(LocalTime.of(18,30))) ? super.getDiscount() : getPrice()).setScale(2, RoundingMode.HALF_UP);
     }
+
+
 }

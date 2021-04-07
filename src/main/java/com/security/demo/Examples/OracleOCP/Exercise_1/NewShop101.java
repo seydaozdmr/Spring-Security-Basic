@@ -27,6 +27,8 @@ public class NewShop101 {
              public AbstractProduct applyRating(Begeni rating) {
                  return null;
              }
+
+
          };
 
         System.out.println(p1.getName());

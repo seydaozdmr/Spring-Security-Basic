@@ -19,6 +19,17 @@ public class ProductManager {
 
     private ResourceFormatter formatter;
 
+    //static final değişkenler hemen initialize edilmeli
+    static final double constantprice = 0;
+    static final int p;
+    static {
+        p=9;
+    }
+
+    public Map<Product, List<Review>> getPmHashMap() {
+        return pmHashMap;
+    }
+
     //This part utilize a review we use hashmap for products and reviews
     //ProductManager cares only one product object but we need to change this
 //    private AbstractProduct product;

@@ -85,4 +85,8 @@ public abstract class AbstractProduct {
                 ", best Before =" +getBestBefore()+
                 '}';
     }
+
+    public  void setPrice(BigDecimal i){
+        this.price=i;
+    };
 }

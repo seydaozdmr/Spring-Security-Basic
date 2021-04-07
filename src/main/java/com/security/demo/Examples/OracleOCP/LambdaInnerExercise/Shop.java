@@ -15,6 +15,10 @@ public class Shop {
         pm.reviewProduct(101,Begeni.TWO_STAR,"idare");
         pm.reviewProduct(101,Begeni.THREE_STAR,"fena değil");
 
+        pm.createProduct(103,"Ice Tea", BigDecimal.valueOf(12.22), Begeni.FIVE_STAR, LocalDate.now().plusDays(100));
+        pm.reviewProduct(101,Begeni.FIVE_STAR,"kötü");
+
+
         pm.createProduct(102,"Kola",BigDecimal.valueOf(43.32),Begeni.THREE_STAR,LocalDate.now().plusDays(365));
         pm.reviewProduct(102,Begeni.THREE_STAR,"Fena değil");
 
@@ -38,10 +42,14 @@ public class Shop {
                 }
             }
         };
+
+        Comparator<Product> priceSorter=(o1,o2)->o1.getPrice().compareTo(o2.getPrice());
         System.out.println("------Products------");
         pm.printProducts(begeniyeGoreSirala.reversed());
         System.out.println("------BestBefore------");
         pm.printProducts((o1, o2) -> o1.getBestBefore().compareTo(o2.getBestBefore()));
+        System.out.println("------Price(Ucuzdan Pahaliya Sıralama)-------");
+        pm.printProducts(priceSorter.thenComparing(begeniyeGoreSirala.reversed())); //önce daha çok beğeni alanı sıralar
 
 
 
