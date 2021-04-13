@@ -10,6 +10,8 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class ProductManager {
 
@@ -110,25 +112,34 @@ public class ProductManager {
         pmHashMap.remove(product,reviews);
         reviews.add(new Review(rating,comment));
 
-        int sum=0;
-        for(Review review:reviews){
-            sum+=review.getRating().ordinal();
-        }
+        product=product.applyRating(Rateable
+                .convertRating((int)Math.round(
+                        reviews.stream()
+                                .mapToInt(r->r.getRating().ordinal())
+                                .average()
+                                .orElse(0))));
 
-        product=product.applyRating(Rateable.convertRating(Math.round((float)sum/reviews.size())));
+//        int sum=0;
+//        for(Review review:reviews){
+//            sum+=review.getRating().ordinal();
+//        }
+//
+//        product=product.applyRating(Rateable.convertRating(Math.round((float)sum/reviews.size())));
 
         pmHashMap.put(product,reviews);
         return product;
     }
 
     public Product findProduct(int id){
-        Product product=null;
-        for(Map.Entry<Product,List<Review>> entry:pmHashMap.entrySet()){
-            if(entry.getKey().getId()==id){
-                product=entry.getKey();
-            }
-        }
-        return product;
+//        Product product=null;
+//        for(Map.Entry<Product,List<Review>> entry:pmHashMap.entrySet()){
+//            if(entry.getKey().getId()==id){
+//                product=entry.getKey();
+//            }
+//        }
+//        return product;
+
+        return pmHashMap.keySet().stream().filter(p->p.getId()==id).findFirst().orElseGet(()->null);
     }
 
     public void printProduct(int id) throws UnsupportedEncodingException {
@@ -141,23 +152,58 @@ public class ProductManager {
 
         List<Review> reviews=pmHashMap.get(product);
         Collections.sort(reviews);
-        for(Review review:reviews){
-            if(review==null){
-                break;
-            }
-            System.out.println(formatter.formatReview(review));
+
+        StringBuilder txt=new StringBuilder();
+        if(reviews.isEmpty()){
+            System.out.println(formatter.getText("no.review"));
+        }else{
+            //collect sonuç olarak çıktı verisi veriyor bunu bir yerde kullanmak gerekiyor...
+            txt.append(reviews.stream().map(p->formatter.formatReview(p)+"\n").collect(Collectors.joining()));
+            //foreach işlemi onaylıyor
+            //reviews.stream().forEach(review -> System.out.println(formatter.formatReview(review)));
+            //reviews.stream().forEach(r->txt.append(formatter.formatReview(r)+"\n"));
         }
-        if(reviews.size()==0){
-            String val=formatter.getText("no.reviews");
-            String deger=new String(val.getBytes("ISO-8859-1"), "UTF-8");
-            System.out.println(deger);
-        }
+
+        System.out.println("yeni :"+txt);
+//        for(Review review:reviews){
+//            if(review==null){
+//                break;
+//            }
+//            System.out.println(formatter.formatReview(review));
+//        }
+//        if(reviews.size()==0){
+//            String val=formatter.getText("no.reviews");
+//            String deger=new String(val.getBytes("ISO-8859-1"), "UTF-8");
+//            System.out.println(deger);
+//        }
     }
 
-    public void printProducts(Comparator<Product> sorter){
-        List<Product> productList=new ArrayList<>(pmHashMap.keySet());
-        productList.sort(sorter);
-        productList.forEach(System.out::println);
+    public Map<String,String> getDiscounts(){
+        return pmHashMap.keySet().stream()
+                .collect(Collectors.groupingBy(product->product.getRating().printBegeni()
+                        ,Collectors.collectingAndThen(
+                                Collectors.summingDouble(
+                                        product->product.getDiscount().doubleValue()
+                                ),discount->formatter.moneyFormat.format(discount)
+                        )));
+    }
+
+    //String s=formatter.moneyFormat.format(34.34);
+
+    public void printProducts(Predicate<Product> filter,Comparator<Product> sorter){
+//        List<Product> productList=new ArrayList<>(pmHashMap.keySet());
+//        productList.sort(sorter);
+//        productList.forEach(System.out::println);
+
+        StringBuilder txt=new StringBuilder();
+        //pmHashMap.keySet().stream().sorted().forEach(p->txt.append(p.getName()));
+        pmHashMap.keySet()
+                .stream()
+                .sorted()
+                .filter(filter)
+                .forEach(p->txt.append(formatter.formatPruduct(p)+"\n"));
+        //System.out.println("yeni txt:"+pmHashMap.keySet().stream().sorted().map(p-> formatter.formatPruduct(p)+"\n").collect(Collectors.joining()));
+        System.out.println(txt);
     }
 
     private static class ResourceFormatter{

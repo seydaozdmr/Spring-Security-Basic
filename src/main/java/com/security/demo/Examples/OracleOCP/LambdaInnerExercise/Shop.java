@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Comparator;
+import java.util.Map;
 
 public class Shop {
     public static void main(String[] args) throws UnsupportedEncodingException {
@@ -19,9 +20,12 @@ public class Shop {
         pm.reviewProduct(101,Begeni.FIVE_STAR,"kötü");
 
 
-        pm.createProduct(102,"Kola",BigDecimal.valueOf(43.32),Begeni.THREE_STAR,LocalDate.now().plusDays(365));
+        pm.createProduct(102,"Kola",BigDecimal.valueOf(43.32),Begeni.THREE_STAR);
         pm.reviewProduct(102,Begeni.THREE_STAR,"Fena değil");
 
+        //indirimler
+        System.out.println("indirimler*********************");
+        pm.getPmHashMap().keySet().stream().forEach(product -> System.out.println(product.getDiscount()));
         pm.printProduct(101);
 
         pm.changeLocale("tr-TR");
@@ -45,13 +49,15 @@ public class Shop {
 
         Comparator<Product> priceSorter=(o1,o2)->o1.getPrice().compareTo(o2.getPrice());
         System.out.println("------Products------");
-        pm.printProducts(begeniyeGoreSirala.reversed());
-        System.out.println("------BestBefore------");
-        pm.printProducts((o1, o2) -> o1.getBestBefore().compareTo(o2.getBestBefore()));
+        pm.printProducts(p->p.getRating().ordinal()>0,begeniyeGoreSirala.reversed());
+        System.out.println("------BestBefore-101-----");
+        pm.printProducts(p->p.getId()==101,(o1, o2) -> o1.getBestBefore().compareTo(o2.getBestBefore()));
         System.out.println("------Price(Ucuzdan Pahaliya Sıralama)-------");
-        pm.printProducts(priceSorter.thenComparing(begeniyeGoreSirala.reversed())); //önce daha çok beğeni alanı sıralar
+        pm.printProducts(p->p.getPrice().compareTo(BigDecimal.valueOf(10))>0,priceSorter.thenComparing(begeniyeGoreSirala.reversed())); //önce daha çok beğeni alanı sıralar
 
-
+        for(Map.Entry k : pm.getDiscounts().entrySet()){
+            System.out.println(k.getKey()+" : "+k.getValue());
+        }
 
     }
 

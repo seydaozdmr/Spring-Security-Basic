@@ -7,6 +7,7 @@ import com.security.demo.Examples.OracleOCP.Interfaces.Liquid;
 import com.security.demo.Examples.OracleOCP.Interfaces.Testable;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 
 public class Drink extends Product implements Liquid, Testable, Drinkable {
 
@@ -68,5 +69,12 @@ public class Drink extends Product implements Liquid, Testable, Drinkable {
     @Override
     public int compareTo(Product o) {
         return 0;
+    }
+
+    @Override
+    public BigDecimal getDiscount() {
+        LocalTime localTime=LocalTime.now();
+        System.out.println(localTime.getHour());
+        return (localTime.isAfter(LocalTime.of(15,30))&&localTime.isBefore(LocalTime.of(18,30))) ? super.getDiscount() : BigDecimal.ZERO;
     }
 }
