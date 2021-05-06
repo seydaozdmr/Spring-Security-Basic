@@ -17,7 +17,7 @@ public class ZooInfo {
         };
 
         try{
-            executorService= Executors.newSingleThreadExecutor();
+            executorService= Executors.newSingleThreadExecutor(); //1 tane thread yaratır ve bu thread'le Runnable tasklar çalıştırılır.
             System.out.println("begin");
             executorService.execute(task1);
             executorService.execute(task2);
