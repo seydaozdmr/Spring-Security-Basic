@@ -16,7 +16,7 @@ public class ThreadPool {
         for(int i=0;i<numberOfThreads;i++){
             PoolThreadRunnable poolThreadRunnable= new PoolThreadRunnable(taskQueue);
             //burada threadler yaratılıyor.
-            runnables.add( new PoolThreadRunnable(taskQueue));
+            runnables.add( poolThreadRunnable);
         }
 
         for(PoolThreadRunnable r:runnables){

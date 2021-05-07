@@ -4,7 +4,7 @@ package com.security.demo.Examples.OracleOCP.Concurrency.ConcurrencyAPI;
 
 public class ThreadPoolExample  {
     public static void main(String[] args) throws Exception {
-        ThreadPool threadPool=new ThreadPool(3,3);
+        ThreadPool threadPool=new ThreadPool(3,10);
 
         for(int i=0;i<30;i++){
             int taskNo=i;
