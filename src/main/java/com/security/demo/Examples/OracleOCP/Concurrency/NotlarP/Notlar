@@ -1,0 +1,115 @@
+Giriş Bilgileri
+1-Bilgisayarların dışardan veri okuma ve yazma kapasitesi vardır. (I/O, diskten, network
+JDBC gibi)
+2-Bu işlemleri kıyasladığımızda CPU'nun işlem hızı disk ya da network işlemlerine göre oldukça
+hızlıdır.
+3-İşletim sistemi işlemlerini durdurup her defasında bu işlemlerin bitmesini bekleseydi
+bilgisayarımız olduça yavaşlayacak ya da donacaktı.
+4-Bütün modern işletim sistemleri Multithreaded processing işlemlerini desteklemektedir.
+5- Multithreaded processing kavramı bir uygulamının ya da bir grup uygulamanın aynı anda
+pek çok işlemi çalıştırabilmesi anlamına gelmektedir.
+6-Bu bir görev gerçekleştirilirken başka kaynaklara ait görev isteklerinin gerçekleştirilmesi
+için yol vererilmesine izin vermektir.
+7-İlk java sürümlerinde multithreaded programlama Thread sınıfı ile sağlanmıştır.
+8-Yakın zamanda Concurrency API tanıtılmıştır.
+9-Kompleks thread görevlerini gerçekleştirmek için pek çok sınıf barındırır.
+10-Bu api'in tasarlanmasının sebebi geliştiricilere multi thread işlemlerde tekrar kullanılabilir
+kalıplar yaratmak.
+11-Threads ve concurrency (eş zamanlılık) kavraması en zor başlıklardan biridir.
+
+Threads :
+1-Bir thread işletim sisteminin gerçekleştireceği, çalıştırılacak en küçük işlem birimidir.
+2-Burada işletim sistemi dedim dikkat ederseniz. Java ile yazdığımız thread ler işlerim sistemi
+aracılığı ile gerçekleştirilir.
+3-Bir işlem ise ilişkili, aynı ortamı paylaşan bir grup thread'in aynı anda çalıştırılmasıdır.
+4-Örneğin word programını çalıştırdığımızda biz yazı yazarken aynı anda yazım hatalarının
+denetlenmesi, bu işlemin çalıştırılması sırasında arka planda pek çok thread'in (işlem parçacığı)
+çalıştırıldığını gösterir.
+5-Ya da consolda bir static main metodu çalıştırdığımızda bunun içinde pek çok thread'i (küçük
+iş parçasını gerçekleştirebiliriz. Yalnız biz bu main metodunun çalışmasına bir işlem (process)
+diyoruz.
+6-single threaded process yalnızca bir thread içerir, multithreaded process ise bir ya da
+daha çok thread içerir.
+7-Görevler ise bir thread'in gerçekleştirdiği işlem birimidir. (Runnable)
+8-Bir thread bir birdinden bağımsız birden çok görevi aynı anda birini olmak üzere tamamlayabilir.
+9-Bir thread static değişkenleri, nesne örneklerini (instance variables) ve local değişkenleri
+kullanabilir.
+10-Multithreaded işlemlerde static değişkenlerle işlem yapmak kullanışlıdır. Bir threadle
+yaptığımız bir değişikliğin sonucunu başka bir threadle okuyabiliriz.
+
+11-Java ile yazdığımız bütün uygulamalar Multithreaded'dir. Hello World uygulamamız bile
+multithreaddir çünkü arka planda pekçok işlem gerçekleştirilmektedir.
+12-Threadleri ikiye ayırabiliriz system threadleri ve bizim tanımladığımız threadler.
+13-system threadleri jvm tarafından yaratılır ve uygulamanın arka planında çalıştırılır.
+14-Örneğin garbage collector jvm tarafından yaratılır ve kullanılmayan bellek bölümlerini
+temizler.
+15-Bizim tanımladığım threadler ise belirli bir görevi gerçekleştirmek üzere yaratılmış threadlerdir.
+16-Fonksiyonel programlamada örnek olarak gerçekleştirdiğimiz bütün işlemler de multithread dir.
+17-Yalnız içinde bir tane thread (main thread) bizim tanımladığımız threaddir.
+18-Biz bu gibi durumlarda arka planlanda çalışan system threadleri olsa bile durumu
+basitleştirmek için single-threaded application (tek threadli uygulama) diyoruz.
+
+Threadlerin eş zamanlı çalışmasını anlamak
+****************************************
+1-daha multithreaded işlemlerin çalışmasının işletim sistemi aracılığı ile gerçekleştiğini
+söylemiştim.
+2-multiple threadlerin ve işlemlerin aynı zamanda çalıştırılmasına concurrency (eş zamanlılık)
+diyoruz.
+3-tek çekirdekli işlemciler bir zamanda yalnızca bir görevi çalıştırabilir.
+4-çok çekirdekli ya da birden cok cpu bulunan sistemlerde ise çok fazla thread aynı anda
+çalıştırılabilir.
+5-peki elimizdeki sistem, bilgisayar gerçekleştirilmesi gereken çok fazla thread varsa, hangisinin
+gerçekleştirileceğine nasıl karar verir?
+6-İşletim sistemi thread scheduler ile o anda hangi thread'in çalıştırılması gerektiğine karar
+veriyor.
+7-Örneğin bu durumu gerçekleştirebilmek için round-rubin scheduler isimli algoritmayı kullanabilir
+8-Çoklu görevleri gerçekleştirmek için kullanıclan en eski algoritmalardan biri.
+9-İşlemci kuyruğa aldığı işlemleri, belirli zaman aralıklarıyla işlemler arasında
+geçiş yapıyor ve bu durum dairesel bir şekilde sürüyor.
+10-Bu işlemler gerçekleştirilirken çalıştırılan Thread bölünebilir, sıradaki başla bir thread
+çalıştırılabilir.
+11-Aynı zamanda thread scheduler thread'in öncelik derecesine bakabilir.
+12-Bu Thread'in aldığı (int) sayısal bir değerdir. Ve thread çalıştırılırken göz önene alınır.
+13-Thread-scheduler algoritmaları eskiden tek çekirdekli işlemlerde aynı anda pek çok işlemin
+sırasıyla çalıştırılmasına yarıyorlardı. Fakat günümüzde çok çekirdekli işlemciler kullanılsa
+bile bu algoritmalar kullanılmaya devam ediyor.
+
+//Görevleri yaratmak
+1-Görevleri yaratmak için Runnable interface'ini kullanıyoruz. Bu interface'in void run()
+isimli tek metodu olduğu için functional interface'dir. Argüman almaz değer döndürmez.
+2-Bunun için 3 farklı seçeneğimiz var. Birincisi Runnable interface'inden anonymous
+sınıf yaratarak bir instance oluşturmak. İkincisi lambda expressin ile void bir
+ifade yaratmak. Üçüncüsü bir sınıfa Runnable inteface'ini implement etmek ve
+run() methodunu override etmek.
+
+//Görevleri çalıştırmak
+1-Görevleri çalıştırmak için Thread sınıfını kullanmalıyız.
+2-İlk olarak Thread sınıfından bir instance oluşturmak ve constructor una bir Runnable
+görev atamak. Daha sonra bu instance i test.start() ile çalıştırmak.
+3-Not olarak birden çok thread çalıştırdığımızda hangisinin önce çalıştırılacağı
+garanti değildir.
+4-Thread'leri yaratmak için bir diğer yöntem ise Thread sınıfını extend ettikten sonra
+run methodunu override etmek. Bu daha az tercih edilen bir yöntemdir.
+5-Oluşturduğumuz thread'i start() methodu ile çalıştırmalıyız. Eğer run() methodu ile
+çalıştırmaya kalkarsak main methodunun çalıştığı main thread i ile birlikte çalışır.
+6-Birbirinde bağımsız olarak yaratılan ve çalıştırılan Thread'ler asynchronous
+(asekron) yani bir birinden bağımsız ayrı çalışırlar.
+7-Bu durumun tersi synchronous görevlerdir.
+Not: Threadlerin çalıştırılma sırası belirtilmiş olmamasına rağmen single thread
+içinde işlemleri sırasıyla gerçekleştirir.
+8-Main thread sona erse bile program içerisinde çalışan bir thread varsa çalışmaya devam eder.
+
+
+Java Memory Model
+1-Her bir thread için ayrılmış Thread Stack vardır ve her biri kendine ayrılmış bölümü kullanabilir
+2-Heap alanını ise iki thread paylaşır. İkisi de kullanabilir.
+3-Bir thread ramden bir local variable, ya da instance variable istediği zaman bu bilgi cache'e kopyalanır
+4-Büyük ihtimalle veri CPU registers'a gönderilir ya da bazen cache'de çalıştırılır işlem yapılır (executes)
+5-Bu biraz da JVM'e bağlıdır ya da bizim Threadleri nasıl çalıştırdığımızla ilgilidir.
+6-İşlem bittiğinde tam tersi olur işlemciden ram'e gönderilir ve bilgi güncellenir
+7-İki thread heap'teki bilgiyi aynı anda okuyup yazmaya çalışırsa race condition sorunu meydana gelir.
+8-Bu sorunu synchronized ya da volatile ile çözebiliriz.
+
+
+
+

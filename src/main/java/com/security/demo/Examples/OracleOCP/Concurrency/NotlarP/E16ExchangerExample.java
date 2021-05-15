@@ -1,6 +1,6 @@
-package com.security.demo.Examples.OracleOCP.Concurrency;
+package com.security.demo.Examples.OracleOCP.Concurrency.NotlarP;
 
-public class ExchangerExample {
+public class E16ExchangerExample {
     public static void main(String[] args) {
         SynchronizedExchanger synchronizedExchanger=new SynchronizedExchanger();
 

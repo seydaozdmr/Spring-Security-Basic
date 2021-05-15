@@ -1,4 +1,4 @@
-package com.security.demo.Examples.OracleOCP.Concurrency;
+package com.security.demo.Examples.OracleOCP.Concurrency.NotlarP;
 
 public class SynchronizedExchanger {
     private Object value;
