@@ -13,6 +13,9 @@ public class Example1 {
         StaticBlock staticBlock=StaticBlock.getInstance();
         StaticBlock.getInfo();
 
+        //inner static private class instance
+        BillPughExample.getInstance().test();
+
 
     }
 }

@@ -1,5 +1,7 @@
 package com.security.demo.Examples.OracleOCP.IOExamples.NIO2;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -32,7 +34,13 @@ public class Examples {
             System.out.println("parent : "+path);
         }
 
-        Path absoluteExample=relativePath.toAbsolutePath();
-        System.out.println(absoluteExample);
+//        Path absoluteExample=relativePath.toAbsolutePath();
+//        System.out.println(absoluteExample);
+
+        try {
+            Path create= Files.createDirectory(Paths.get("test44"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

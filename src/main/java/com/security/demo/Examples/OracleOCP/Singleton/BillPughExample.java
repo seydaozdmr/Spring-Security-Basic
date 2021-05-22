@@ -14,4 +14,8 @@ public class BillPughExample {
     private static class SingletonExample{
         private static BillPughExample billPughExample=new BillPughExample();
     }
+
+    public void test(){
+        System.out.println("mytest");
+    }
 }
