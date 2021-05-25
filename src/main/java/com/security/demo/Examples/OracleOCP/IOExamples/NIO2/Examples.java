@@ -70,5 +70,27 @@ public class Examples {
         }catch (IOException e){
             e.printStackTrace();
         }
+
+        //Dosyayı okuyoruz.
+        List<String> listem=null;
+
+        try {
+            listem=Files.readAllLines(newPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        listem.forEach(System.out::println);
+
+        System.out.println(Files.isRegularFile(newPath));
+        System.out.println(Files.isWritable(newPath));
+        try {
+            System.out.println(Files.size(newPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        
+
+
     }
 }
