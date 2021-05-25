@@ -22,3 +22,8 @@ H2 Embaded database kullanarak ya da Mysql kullanarak kullanıcı girişi yapıl
 -File IO 
 -Threads
 -Examples
+-Stream API
+-Lambda Expression
+-Built in functions
+
+
