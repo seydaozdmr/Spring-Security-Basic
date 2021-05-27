@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Examples3 {
@@ -19,5 +20,14 @@ public class Examples3 {
         }catch (IOException e){
             e.printStackTrace();
         }
+
+        try(Stream paths2=Files.find(path,0,(p,a)->a.isSymbolicLink())){
+            paths2.map(s -> s.toString()).filter(s->s.toString().endsWith(".txt"))
+            .forEach(System.out::println);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+
     }
 }
