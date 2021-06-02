@@ -13,8 +13,20 @@ public class Car {
         return satisAdeti+=siparisAdeti;
     }
 
+    public void go(){
+        String message="hareket başladı";
+        System.out.println(message);
+        int speedTemp= getSpeed();
+    }
+
+    public int getSpeed(){
+        return this.speed;
+    }
+
+
+
     {
-        int a=0; //local variable (temp - automatic - stack variable)
+        int a=5; //local variable (temp - automatic - stack variable) stack'de tutulur
         speed+=a;
     }
 
