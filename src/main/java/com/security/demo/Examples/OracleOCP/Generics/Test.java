@@ -6,6 +6,8 @@ import java.util.List;
 public class Test {
 
     public static void main(String[] args) {
+
+        System.out.println( );
         System.out.println(More.<String>identity("asd"));
         More.sink("ttt");
 
