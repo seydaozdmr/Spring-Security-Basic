@@ -7,6 +7,8 @@ public class Car {
     public int speed;
     public static int satisAdeti;  //class variable
 
+    //public String speed; farklı türde bile aynı isimde değişken ismi kullanılamaz
+
     //member variable --> instance variable + class variable
 
     public static int sat(int siparisAdeti){ //siparis adeti local variable
@@ -17,6 +19,13 @@ public class Car {
         String message="hareket başladı";
         System.out.println(message);
         int speedTemp= getSpeed();
+    }
+
+    //shadowing
+    public void saySpeed(){
+        int speed=0;
+        speed=this.speed;
+        System.out.println("speed is : "+speed); //buradaki local variable speed yukardaki member variable'ı gölgeliyor.
     }
 
     public int getSpeed(){
