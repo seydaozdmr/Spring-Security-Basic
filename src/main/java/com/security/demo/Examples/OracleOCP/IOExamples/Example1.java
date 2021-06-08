@@ -16,9 +16,12 @@ public class Example1 {
         System.out.println(file2.exists());
 
         //getting absolute path:
-        System.out.println(file2.getAbsolutePath());
+        System.out.println("path :"+file2.getAbsolutePath());
+        System.out.println(file2);
         //getting parent
-        System.out.println(file2.getParent());
+        System.out.println("path2 :"+file2.getParent());
+        File newFile=new File(file2.getParent());
+        System.out.println("new File :"+newFile);
 
         //check if is directory or file
         System.out.println(file2.isFile());
@@ -31,6 +34,10 @@ public class Example1 {
         //showing files in directory
         for(File files:directory.listFiles()){
             System.out.println(files.getName());
+        }
+
+        for(String i:file2.list()){
+            System.out.println(i);
         }
         //parent directory
         System.out.println("********C:**************");
