@@ -1,6 +1,6 @@
 package com.security.demo.Examples.OracleOCP.Questions;
 
-import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
+
 
 import java.util.*;
 
