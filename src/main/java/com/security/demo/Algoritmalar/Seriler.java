@@ -6,6 +6,10 @@ public class Seriler {
     public static void main(String[] args) {
         // 1 - 1/3 + 1/5 - 1/7 + 1/9 - 1/11 ... serisinin toplamı
 
+        Integer l=100;
+        l=999;
+
+
         double toplam=1;
         Scanner scanner=new Scanner(System.in);
         System.out.println("Lütfen n giriniz : ");
