@@ -22,6 +22,8 @@ public class KelimeUzunluk {
         }
         System.out.println("girilen kelimenin uzunluğu : "+ length);
 
+        
+
 
 
 
