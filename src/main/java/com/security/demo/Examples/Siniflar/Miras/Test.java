@@ -51,5 +51,7 @@ public class Test {
         //plant genel bilgileri içerir hass ise özel dolaysıyla hass plant'ın genel bilgilerine sahiptir
         //bu kullanımda plant nesnesi hass a ait üye nesnelerine ya da özelliklerine (property) leri erişemez.
         //vekil olarak parentten child'e miras olarak geçen metotlar childde gizlenemez
+
+
     }
 }
