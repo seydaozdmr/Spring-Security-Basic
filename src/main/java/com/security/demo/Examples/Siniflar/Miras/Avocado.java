@@ -39,4 +39,11 @@ public class Avocado extends Plant{
     public void ilac(){
         System.out.println("avocado çok ilaçlanmaz");
     }
+
+    @Override
+    public String toString() {
+        return "Avocado{" +
+                "tall=" + tall +
+                '}';
+    }
 }

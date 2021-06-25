@@ -21,7 +21,7 @@ public class Test {
 //
 //        //Hass
 //        System.out.println("\n***********Hass***********");
-           Hass hass=new Hass(2); //yalnızca ağırlık giriyorum
+//           Hass hass=new Hass(2); //yalnızca ağırlık giriyorum
 //        System.out.println(Hass.tarla);
 //        //burada sadece plant içindeki static nesneyi tetikliyorum
 //        //Plant.sayPlant();
@@ -45,12 +45,21 @@ public class Test {
          */
 
         //Bir istemci üst sınıftan neye ulaşabiliyorsa alt sınıftan da en azından ona ulaşabilmeli;
-        Plant plant=new Hass(250);
-        plant.bitkiBesleme();
+//        Plant plant=new Hass(250);
+//        plant.bitkiBesleme();
         //bitki besleme aynı zamanda Hass'ın da miras aldığı bir metotdur
         //plant genel bilgileri içerir hass ise özel dolaysıyla hass plant'ın genel bilgilerine sahiptir
         //bu kullanımda plant nesnesi hass a ait üye nesnelerine ya da özelliklerine (property) leri erişemez.
         //vekil olarak parentten child'e miras olarak geçen metotlar childde gizlenemez
+
+        Plant p=new Hass(2,"MyAvocado","Hass",2,2);
+
+        Avocado av=(Avocado) p;
+
+        System.out.println(av);
+
+
+
 
 
     }
