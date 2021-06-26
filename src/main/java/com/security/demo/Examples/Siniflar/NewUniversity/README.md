@@ -19,7 +19,7 @@ Employee has type `officer` or `professor`
 
 ## Diagram 
 
-<img src="https://github.com/tableonthewall/Spring-Security/blob/master/src/main/java/com/security/demo/Examples/Siniflar/NewUniversity/university.png?raw=true" width="100" height="100">
+<img src="https://github.com/tableonthewall/Spring-Security/blob/master/src/main/java/com/security/demo/Examples/Siniflar/NewUniversity/university.png?raw=true" width="800" height="600">
 
 
 
