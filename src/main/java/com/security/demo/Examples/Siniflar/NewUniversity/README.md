@@ -18,7 +18,7 @@ Office has `employees`
 Employee has type `officer` or `professor`
 
 
-<img src="https://github.com/tableonthewall/Spring-Security/blob/master/src/main/java/com/security/demo/Examples/Siniflar/NewUniversity/university.png?raw=true" width="600" height="800">
+<img src="https://github.com/tableonthewall/Spring-Security/blob/master/src/main/java/com/security/demo/Examples/Siniflar/NewUniversity/university.png?raw=true" width="800" height="600">
 
 
 
