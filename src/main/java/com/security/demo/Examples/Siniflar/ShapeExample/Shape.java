@@ -1,6 +1,6 @@
 package com.security.demo.Examples.Siniflar.ShapeExample;
 
-public class Shape {
+public abstract class Shape {
 
 
     public void draw(){
@@ -25,13 +25,9 @@ public class Shape {
         System.out.println("shape is creating");
     }
 
-    public double calculateArea(){
-        return 0.0; //kare ya da dikdörtgen alanı
-    }
+    public abstract double calculateArea();
 
-    public double calculateCircumference(){
-        return 0.0;
-    }
+    public abstract double calculateCircumference();
 
 
 }

@@ -10,10 +10,10 @@ public class ShapeFactory {
         int i=(int) (5* Math.random());
 
         switch (i){
-            case 0:{
-                shape=new Shape();
-                break;
-            }
+//            case 0:{
+//                //shape=new Shape();
+//                break;
+//            }
             case 1:{
                 shape=new Circle(5.0);
                 break;
