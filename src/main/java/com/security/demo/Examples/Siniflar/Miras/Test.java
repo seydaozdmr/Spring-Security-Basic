@@ -54,8 +54,24 @@ public class Test {
 
         Plant p=new Hass(2,"MyAvocado","Hass",2,2);
 
-        Avocado av=(Avocado) p;
-
+        Avocado av=new Avocado(3,"avocado","notype",5,6.0);
+        System.out.println(av);
+        System.out.println("*************");
+        //down casting daha genel bir referansın daha özel bir türe dönüştürülmesi
+        //örneğimizde p is a Plant
+        //ama gösterdiği nesne Hass
+        //bundan dolayı biz genel olan p'yi daha özel olan alttaki tiplere cast edebiliyoruz.
+        if(p instanceof Hass){
+            System.out.println("p is a Hass");
+        }
+        if(p instanceof Avocado){
+            System.out.println("p is a avocado");
+            av=(Avocado) p;
+        }
+        if(p instanceof Plant){
+            System.out.println("p is a Plant");
+        }
+        System.out.println("***********************");
         System.out.println(av);
 
 
