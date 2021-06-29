@@ -16,7 +16,7 @@ Horses Feniles Rodents extends Animal
 
 ## Diagram 
 
-<img src="https://github.com/tableonthewall/Spring-Security/blob/master/src/main/java/com/security/demo/Examples/Siniflar/NewUniversity/university.png?raw=true" width="800" height="600">
+<img src="https://github.com/tableonthewall/Spring-Security/blob/master/src/main/java/com/security/demo/Examples/Siniflar/AbstractAnimals/animals.png?raw=true" width="800" height="600">
 
 
 
