@@ -17,7 +17,15 @@ public class PredicateExample {
         strings.add("four");
         strings.add("five");
 
-        strings.removeIf(s->s.startsWith("t"));
+        /**
+         * Java da default method kullanılmasının sebebi functional programming özelliklerinin eklenmesiyle
+         * daha önce tasarlanan interfacelerin geçmişe yönelik uyumluluğunun bozulmasının önüne geçmek
+         * bir interface'e yeni bir method tanımlarsak onu implement eden sınıflar bu metohodu tekrardan
+         * override etmek zorunda böylece daha önce bu interfacelerin kullanılarak yazıldığı sınıflar 1.8'den
+         * itibaren çalışmamaya başlayacaktı. bunun önüne geçmek için interface içinde default methodların
+         * yazılması başlatıldı.
+         */
+        strings.removeIf(s->s.startsWith("t")); //Predicate
         System.out.println(strings);
 
         Consumer<String> action=s-> System.out.println(s);
