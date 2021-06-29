@@ -1,4 +1,4 @@
-#University OOP Example
+#Animals OOP polymorphism Example
 
 ##Classes:
 - ManageAnimals
