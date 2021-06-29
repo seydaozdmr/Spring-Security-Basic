@@ -2,23 +2,21 @@ package com.security.demo.Examples.Siniflar.AbstractAnimals;
 
 import java.time.LocalTime;
 
-public class Horses extends Animal{
-
-    public Horses(String name, double weight, int age) {
+public class Rodents extends Animal{
+    public Rodents(String name, double weight, int age) {
         super(name, weight, age);
     }
 
-    public Horses() {
-        super();
+    public Rodents() {
     }
 
     @Override
     public void getDosage() {
-        System.out.println("horses dosage.");
+        System.out.println("rodents dosage");
     }
 
     @Override
     public long getFeedSchedule() {
-        return LocalTime.of(2,0).getMinute();
+        return LocalTime.of(3,0).getMinute();
     }
 }
