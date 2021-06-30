@@ -1,4 +1,4 @@
-package com.security.demo.Examples.Kurslar;
+package com.security.demo.Examples.Siniflar.Kurslar;
 
 public class Lesson {
     private int dersNo;

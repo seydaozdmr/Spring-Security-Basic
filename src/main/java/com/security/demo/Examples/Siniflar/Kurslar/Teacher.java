@@ -1,4 +1,4 @@
-package com.security.demo.Examples.Kurslar;
+package com.security.demo.Examples.Siniflar.Kurslar;
 
 public class Teacher extends Student {
     public Teacher(String name, String description, String userName) {
