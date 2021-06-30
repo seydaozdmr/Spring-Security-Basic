@@ -6,8 +6,10 @@ public class TestClass {
         Calculator calculator=new CalculatorT1();
         MathFunction mathFunction=new SinFunction("Sin");
         MathFunction toplama=new SumFunction("Sum");
+        MathFunction fibo=new FiboFunction("Fibo");
         calculator.addFunction(mathFunction);
         calculator.addFunction(toplama);
+        calculator.addFunction(fibo);
 
         double result=calculator.doCalculation("Sin",arguments);
 
@@ -15,5 +17,8 @@ public class TestClass {
 
         double sonuc=calculator.doCalculation("Sum",new Argument(5,10));
         System.out.println("toplama sonucu : "+sonuc);
+
+        double fiboResult=calculator.doCalculation("Fibo",new Argument(5));
+        System.out.println(fiboResult);
     }
 }
