@@ -25,6 +25,7 @@ public class DivisionByZeroExample {
 
     public static void divideWithThrowsException(int a,int b){
         if(b==0){
+            //unchecked exception
             throw new ArithmeticException("0'a bölemezsiniz...");
         }else{
             System.out.println("sonuc: "+(a/b));
