@@ -17,6 +17,9 @@ public class ShapeFactory {
 
         System.out.println(shape.calculateArea());
 
+        String name="seyda";
+        name.length();
+
     }
     private static Shape produceShape() throws NegativeArgumentException {
         Shape shape=null;
