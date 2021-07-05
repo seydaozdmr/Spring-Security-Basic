@@ -2,11 +2,12 @@ package com.security.demo.Examples.Siniflar.Asansor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Building{
     private String name;
     private List<Floor> floors;
-    private List<Elevator> elevators;
+    private static List<Elevator> elevators;
 
     public Building() {
         this.name = "Kodluyoruz Sigorta Şirketi";
@@ -19,6 +20,38 @@ public class Building{
         for(int i=1;i<=5;i++){
             elevators.add(new Elevator(i));
         }
+    }
 
+    public List<Floor> getFloors() {
+        return floors;
+    }
+
+    public List<Elevator> getElevators() {
+        return elevators;
+    }
+
+    public Floor getRandomFloor(){
+        return this.floors.get(new Random().nextInt(12));
+    }
+
+    public static Elevator getRandomElevator(Direction direction,Floor floor){
+        boolean findElevator=false;
+        Elevator elevator=null;
+        while(!findElevator){
+            elevator=elevators.get(new Random().nextInt(5));
+            try {
+                Thread.sleep(100);
+                System.out.println("uygun asansör aranıyor...");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if(elevator.isAction() && elevator.getDirection()==direction){
+                findElevator=true;
+            }else if(!elevator.isAction()){
+                findElevator=true;
+            }
+        }
+        elevator.move(floor);
+        return elevator;
     }
 }
