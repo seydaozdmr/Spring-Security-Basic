@@ -7,7 +7,7 @@ import java.util.Random;
 public class Building{
     private String name;
     private List<Floor> floors;
-    private static List<Elevator> elevators;
+    private static List<ElevatorImpl> elevators;
 
     public Building() {
         this.name = "Kodluyoruz Sigorta Şirketi";
@@ -15,10 +15,10 @@ public class Building{
         this.elevators = new ArrayList<>();
 
         for(int i=0;i<12;i++){
-            floors.add(new Floor(i,(i+".Kat")));
+            floors.add(new FloorImpl(i,(i+".Kat")));
         }
         for(int i=1;i<=5;i++){
-            elevators.add(new Elevator(i));
+            elevators.add(new ElevatorImpl(i));
         }
     }
 
@@ -26,7 +26,7 @@ public class Building{
         return floors;
     }
 
-    public List<Elevator> getElevators() {
+    public List<ElevatorImpl> getElevators() {
         return elevators;
     }
 
@@ -34,9 +34,9 @@ public class Building{
         return this.floors.get(new Random().nextInt(12));
     }
 
-    public static Elevator getRandomElevator(Direction direction,Floor floor){
+    public static Elevator getRandomElevator(Direction direction, FloorImpl floor){
         boolean findElevator=false;
-        Elevator elevator=null;
+        ElevatorImpl elevator=null;
         while(!findElevator){
             elevator=elevators.get(new Random().nextInt(5));
             try {
@@ -45,13 +45,14 @@ public class Building{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if(elevator.isAction() && elevator.getDirection()==direction){
+            if(elevator.isActive() && elevator.getDirection()==direction){
                 findElevator=true;
-            }else if(!elevator.isAction()){
+            }else if(!elevator.isActive()){
                 findElevator=true;
             }
         }
         elevator.move(floor);
+
         return elevator;
     }
 }

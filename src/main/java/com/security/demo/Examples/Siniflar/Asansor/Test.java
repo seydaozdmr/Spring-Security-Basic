@@ -1,6 +1,6 @@
 package com.security.demo.Examples.Siniflar.Asansor;
 
-import java.util.List;
+import java.util.Random;
 
 public class Test {
     public static void main(String[] args) {
@@ -17,5 +17,14 @@ public class Test {
         }
         System.out.println(elevator);
 
+        int kat=0;
+        boolean randomBul=false;
+        while (!randomBul){
+            kat = new Random().nextInt(12);
+            if(kat!=elevator.getCurrentFloor()){
+                randomBul=true;
+            }
+        }
+        elevator.move(new FloorImpl(kat));
     }
 }
