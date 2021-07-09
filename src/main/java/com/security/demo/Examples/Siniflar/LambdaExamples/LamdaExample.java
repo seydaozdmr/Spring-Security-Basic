@@ -27,6 +27,9 @@ public class LamdaExample {
             }
         }));
 
+        //mod
+        System.out.println(islemYap(100,3,(a,b)->a%b));
+
 
     }
     private static double islemYap(double a,double b , DoOperation doOperation){
