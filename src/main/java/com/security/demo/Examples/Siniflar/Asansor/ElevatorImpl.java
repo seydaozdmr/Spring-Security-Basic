@@ -1,5 +1,8 @@
 package com.security.demo.Examples.Siniflar.Asansor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ElevatorImpl implements Elevator{
     private int id;
     private ElevatorDoor door;
@@ -8,6 +11,7 @@ public class ElevatorImpl implements Elevator{
     private boolean isActive;
     private Floor currentFloor;
     private Direction direction;
+    private List<User> userList;
 
 
     public ElevatorImpl(int id) {
@@ -17,10 +21,11 @@ public class ElevatorImpl implements Elevator{
         this.isActive =false;
         this.currentFloor=new FloorImpl(0);
         this.door=new ElevatorDoor();
+        this.userList=new ArrayList<>();
     }
 
 
-    public void move(Floor floor){
+    public void move(Floor floor,User user){
         if(currentFloor.getId()==floor.getId()){
             floorLight.setCurrentFloor(currentFloor.getId());
             System.out.println("aynı kattasınız : "+currentFloor.getName());
@@ -32,6 +37,7 @@ public class ElevatorImpl implements Elevator{
                 this.direction=Direction.DOWN;
             }
             int currentFloorDigit= this.currentFloor.getId();
+            useElevator(user);
             try {
                 Thread.sleep(1000);
                 door.close();
@@ -43,12 +49,11 @@ public class ElevatorImpl implements Elevator{
                     currentFloor.move(floor);
                     floorLight.setCurrentFloor(currentFloor.getId());
                     floorLight.show(currentFloor);
-
                 }
                 System.out.println();
                 this.isActive =false;
                 door.open();
-
+                removeElevator();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -56,6 +61,27 @@ public class ElevatorImpl implements Elevator{
             this.currentFloor=floor;
         }
 
+    }
+
+    @Override
+    public boolean isFull() {
+        if(this.userList.size()>=6)
+            return true;
+        return false;
+    }
+
+    @Override
+    public void useElevator(User user) {
+        if(this.userList.size()<6){
+            this.userList.add(user);
+        }else{
+            System.out.println("asansör dolu");
+        }
+    }
+
+    @Override
+    public void removeElevator() {
+        this.userList.clear();
     }
 
     public Direction getDirection() {

@@ -37,22 +37,28 @@ public class Building{
     public static Elevator getRandomElevator(Direction direction, FloorImpl floor){
         boolean findElevator=false;
         ElevatorImpl elevator=null;
-        while(!findElevator){
-            elevator=elevators.get(new Random().nextInt(5));
-            try {
-                Thread.sleep(100);
-                System.out.println("uygun asansör aranıyor...");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            while(!findElevator){
+                elevator=elevators.get(new Random().nextInt(5));
+                try {
+                    Thread.sleep(100);
+                    System.out.println("uygun asansör aranıyor...");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if(elevator.isActive() && elevator.getDirection()==direction){
+                    findElevator=true;
+                }else if(!elevator.isActive()){
+                    findElevator=true;
+                }
             }
-            if(elevator.isActive() && elevator.getDirection()==direction){
-                findElevator=true;
-            }else if(!elevator.isActive()){
-                findElevator=true;
-            }
+        if(!elevator.isFull()) {
+            elevator.move(floor, null);
+            return elevator;
         }
-        elevator.move(floor);
+        else {
+            System.out.println("asansör dolu");
+        }
 
-        return elevator;
+        return null;
     }
 }

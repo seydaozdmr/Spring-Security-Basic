@@ -25,6 +25,6 @@ public class Test {
                 randomBul=true;
             }
         }
-        elevator.move(new FloorImpl(kat));
+        elevator.move(new FloorImpl(kat),new User());
     }
 }
