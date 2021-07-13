@@ -1,29 +1,29 @@
 # Spring-Security
 Spring Security Tutorial
 
--Spring Boot 2.4.0
+- Spring Boot 2.4.0
 
--Spring Web
+- Spring Web
 
--Spring Security
+- Spring Security
 
--Data JPA
+- Data JPA
 
--Mysql Connector
+- Mysql Connector
 
--H2 database
+- H2 database
 
--JDBC
+- JDBC
 
 
 Spring Security kullanılarak Role odaklı Authentication uygulaması. 
 H2 Embaded database kullanarak ya da Mysql kullanarak kullanıcı girişi yapılabilir. 
 
--File IO 
--Threads
--Examples
--Stream API
--Lambda Expression
--Built in functions
+- File IO 
+- Threads
+- Examples
+- Stream API
+- Lambda Expression
+- Built in functions
 
 
