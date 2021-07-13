@@ -14,7 +14,7 @@ public class ConnectionDB {
     public static Connection getInstance(){
         if(conn==null){
             try {
-                conn= DriverManager.getConnection("jdbc:mysql://localhost:3306/animals?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=Turkey","root","23892389Sey.");
+                conn= DriverManager.getConnection("jdbc:mysql://localhost:3306/animals?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=Turkey","root","somepassword");
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }

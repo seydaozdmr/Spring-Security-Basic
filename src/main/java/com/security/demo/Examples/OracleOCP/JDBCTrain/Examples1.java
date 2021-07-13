@@ -8,7 +8,7 @@ public class Examples1 {
     public static void main(String[] args) {
 //        Map<Integer,String> idToNameMap=new HashMap<>();
 //
-//        try(Connection connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/animals?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=Turkey","root","23892389Sey.");
+//        try(Connection connection= DriverManager.getConnection("jdbc:mysql://localhost:3306/animals?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=Turkey","root","somepassword");
 //            PreparedStatement ps=connection.prepareStatement("SELECT * FROM names");
 //            ResultSet rs=ps.executeQuery()){
 //            while(rs.next()){
