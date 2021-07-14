@@ -1,9 +1,6 @@
 package com.security.demo.Examples.Torbalar;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ListImpl {
     public static void main(String[] args) {
@@ -13,6 +10,22 @@ public class ListImpl {
         sayilar.add(100);
         sayilar.add(44);
         sayilar.add(100);
+
+        System.out.println("****ForEachRemaining****");
+        Iterator<Integer> iterator= sayilar.iterator();
+        iterator.forEachRemaining(System.out::println);
+
+        System.out.println("***ListIterator");
+        ListIterator<Integer> listIterator=sayilar.listIterator();
+        while(listIterator.hasNext()){
+            int next=listIterator.next();
+            System.out.println("next: "+next);
+            if(next>40){
+                listIterator.previous();
+                System.out.println("prev: "+ listIterator.previous());
+                break;
+            }
+        }
 
         sayilar.sort((a,b)->a.compareTo(b));
         System.out.println(sayilar);
