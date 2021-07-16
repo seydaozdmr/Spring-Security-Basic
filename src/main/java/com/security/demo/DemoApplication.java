@@ -1,17 +1,13 @@
 package com.security.demo;
 
-import com.security.demo.Config.AppConfig;
 import com.security.demo.Config.MethodInjectionConfig;
 import com.security.demo.MethodInjection.DemoBean;
 import com.security.demo.MethodInjection.Singer;
-import com.security.demo.Threads.MainThreads_1;
 import com.security.demo.repositories.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebApplicationContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.util.StopWatch;
 

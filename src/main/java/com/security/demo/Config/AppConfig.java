@@ -1,7 +1,6 @@
 package com.security.demo.Config;
 
-import com.security.demo.Threads.AnotherThread_2;
-import com.security.demo.Threads.MainThreads_1;
+import com.security.demo.Examples.Threads.MainThreads_1;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
